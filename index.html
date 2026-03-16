@@ -9,282 +9,275 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --bg: #100016;
-      --card: rgba(28, 10, 36, 0.55);
-      --card-border: rgba(255, 255, 255, 0.14);
-      --text: #fffdfd;
-      --soft: #f7e8ee;
-      --muted: #ead6df;
-      --shadow: rgba(0, 0, 0, 0.35);
+<style>
+  :root {
+    --bg: #100016;
+    --card: rgba(28, 10, 36, 0.55);
+    --card-border: rgba(255, 255, 255, 0.14);
+    --text: #fffdfd;
+    --soft: #f7e8ee;
+    --muted: #ead6df;
+    --shadow: rgba(0, 0, 0, 0.35);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  body {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    overflow-x: hidden;
+  }
+
+  .site {
+    min-height: 100vh;
+    position: relative;
+    background: var(--bg);
+  }
+
+  canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.06) 46%, rgba(10, 0, 18, 0.18) 100%),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.10) 56%, rgba(10, 0, 18, 0.24) 100%);
+    z-index: 1;
+  }
+
+  .desktop-card {
+    position: absolute;
+    left: 50%;
+    bottom: 4vh;
+    transform: translateX(-50%);
+    z-index: 3;
+
+    width: min(92vw, 1320px);
+    padding: 24px 56px 22px;
+
+    background: rgba(28, 10, 36, 0.44);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.36);
+
+    text-align: center;
+  }
+
+  .names {
+    margin: 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(42px, 4vw, 64px);
+    line-height: 1.02;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.72);
+  }
+
+  .subtitle {
+    margin: 8px 0 0;
+    font-size: clamp(22px, 1.7vw, 30px);
+    line-height: 1.1;
+    font-weight: 500;
+    color: var(--soft);
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.52);
+  }
+
+  .message {
+    margin: 14px auto 0;
+    max-width: 1080px;
+
+    font-size: clamp(19px, 1.28vw, 24px);
+    line-height: 1.35;
+
+    color: var(--text);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  }
+
+  .signature {
+    margin-top: 14px;
+    font-size: clamp(18px, 1.15vw, 23px);
+    line-height: 1.15;
+    font-style: italic;
+    color: var(--muted);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.38);
+  }
+
+  .domain {
+    position: absolute;
+    left: 50%;
+    bottom: 12px;
+    transform: translateX(-50%);
+    z-index: 3;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.88);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  }
+
+  .mobile-wrap {
+    display: none;
+  }
+
+  @media (max-width: 1024px) {
+    .desktop-card {
+      width: min(94vw, 980px);
+      padding: 22px 28px 20px;
+      bottom: 3.5vh;
     }
 
-    * {
-      box-sizing: border-box;
+    .message {
+      max-width: 860px;
+      line-height: 1.32;
     }
+  }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: var(--bg);
-      color: var(--text);
-    }
-
+  @media (max-width: 700px) {
     body {
-      font-family: "Cormorant Garamond", Georgia, serif;
       overflow-x: hidden;
-    }
-
-    .site {
-      min-height: 100vh;
-      position: relative;
-      background: var(--bg);
     }
 
     canvas {
       position: fixed;
       inset: 0;
-      pointer-events: none;
-      z-index: 2;
     }
 
-    /* DESKTOP / LAPTOP LAYOUT */
     .hero {
-      position: relative;
-      min-height: 100vh;
-      overflow: hidden;
-      background: var(--bg);
-    }
-
-    .hero-image {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      display: block;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to right, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.08) 46%, rgba(10, 0, 18, 0.20) 100%),
-        linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.12) 56%, rgba(10, 0, 18, 0.28) 100%);
-      z-index: 1;
-    }
-
-    .desktop-card {
-      position: absolute;
-      left: 50%;
-      bottom: 6vh;
-      transform: translateX(-50%);
-    
-      width: min(78vw, 1100px);
-      padding: 36px 60px 34px;
-    
-      z-index: 3;
-    
-      background: rgba(28, 10, 36, 0.50);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 28px;
-    
-      box-shadow: 0 20px 60px rgba(0,0,0,0.40);
-    
-      text-align: center;
-    }
-
-    .names {
-      margin: 0;
-      font-family: "Playfair Display", Georgia, serif;
-      font-size: clamp(38px, 4.2vw, 62px);
-      line-height: 1.04;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-      color: var(--text);
-      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.72);
-    }
-
-    .subtitle {
-      margin: 10px 0 0;
-      font-size: clamp(22px, 1.9vw, 30px);
-      line-height: 1.15;
-      font-weight: 500;
-      color: var(--soft);
-      text-shadow: 0 3px 12px rgba(0, 0, 0, 0.52);
-    }
-
-    .message {
-      margin: 20px auto 0;
-      max-width: 760px;
-    
-      font-size: clamp(18px,1.35vw,24px);
-      line-height: 1.5;
-    
-      color: var(--text);
-      text-shadow: 0 2px 10px rgba(0,0,0,0.4);
-    }
-
-    .signature {
-      margin-top: 18px;
-      font-size: clamp(18px, 1.3vw, 24px);
-      line-height: 1.2;
-      font-style: italic;
-      color: var(--muted);
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.38);
-    }
-
-    .domain {
-      position: absolute;
-      left: 50%;
-      bottom: 14px;
-      transform: translateX(-50%);
-      z-index: 3;
-      font-size: 14px;
-      letter-spacing: 0.08em;
-      color: rgba(255,255,255,0.88);
-      text-shadow: 0 2px 8px rgba(0,0,0,0.35);
-    }
-
-    /* MOBILE LAYOUT */
-    .mobile-wrap {
       display: none;
     }
 
-    /* TABLET */
-    @media (max-width: 1024px) {
-      .desktop-card {
-        width: min(44vw, 520px);
-        right: 3.2vw;
-        bottom: 5.5vh;
-        padding: 24px 24px 22px;
-      }
-
-      .message {
-        max-width: 420px;
-      }
+    .mobile-wrap {
+      display: block;
+      position: relative;
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #170020 0%, #110016 100%);
+      z-index: 1;
     }
 
-    /* MOBILE */
-    @media (max-width: 700px) {
-      body {
-        overflow-x: hidden;
-      }
-
-      canvas {
-        position: fixed;
-        inset: 0;
-      }
-
-      .hero {
-        display: none;
-      }
-
-      .mobile-wrap {
-        display: block;
-        position: relative;
-        min-height: 100vh;
-        background:
-          linear-gradient(to bottom, #170020 0%, #110016 100%);
-        z-index: 1;
-      }
-
-      .mobile-image-section {
-        position: relative;
-        height: 46vh;
-        min-height: 320px;
-        max-height: 430px;
-        overflow: hidden;
-      }
-
-      .mobile-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center top;
-        display: block;
-      }
-
-      .mobile-image-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          to bottom,
-          rgba(0, 0, 0, 0.02) 0%,
-          rgba(0, 0, 0, 0.05) 62%,
-          rgba(16, 0, 22, 0.24) 100%
-        );
-      }
-
-      .mobile-card-wrap {
-        position: relative;
-        margin-top: -18px;
-        padding: 0 16px 26px;
-        z-index: 3;
-      }
-
-      .mobile-card {
-        background: rgba(24, 6, 32, 0.78);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255,255,255,0.12);
-        border-radius: 24px;
-        box-shadow: 0 12px 32px rgba(0,0,0,0.28);
-        padding: 20px 18px 22px;
-        text-align: center;
-      }
-
-      .mobile-card .names {
-        font-size: clamp(28px, 9vw, 42px);
-        white-space: nowrap;
-      }
-
-      .mobile-card .subtitle {
-        font-size: clamp(18px, 6vw, 24px);
-        margin-top: 8px;
-      }
-
-      .mobile-card .message {
-        margin-top: 14px;
-        max-width: none;
-        font-size: clamp(16px, 5.1vw, 22px);
-        line-height: 1.35;
-      }
-
-      .mobile-card .signature {
-        margin-top: 16px;
-        font-size: clamp(17px, 4.7vw, 21px);
-      }
-
-      .mobile-domain {
-        text-align: center;
-        margin-top: 14px;
-        font-size: 13px;
-        letter-spacing: 0.08em;
-        color: rgba(255,255,255,0.84);
-      }
+    .mobile-image-section {
+      position: relative;
+      height: 46vh;
+      min-height: 320px;
+      max-height: 430px;
+      overflow: hidden;
     }
 
-    @media (max-width: 420px) {
-      .mobile-image-section {
-        height: 44vh;
-        min-height: 290px;
-      }
-
-      .mobile-card .names {
-        font-size: clamp(24px, 8.8vw, 36px);
-      }
-
-      .mobile-card {
-        padding: 18px 16px 20px;
-      }
+    .mobile-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
     }
-  </style>
+
+    .mobile-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.02) 0%,
+        rgba(0, 0, 0, 0.05) 62%,
+        rgba(16, 0, 22, 0.24) 100%
+      );
+    }
+
+    .mobile-card-wrap {
+      position: relative;
+      margin-top: -18px;
+      padding: 0 16px 26px;
+      z-index: 3;
+    }
+
+    .mobile-card {
+      background: rgba(24, 6, 32, 0.78);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 24px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.28);
+      padding: 20px 18px 22px;
+      text-align: center;
+    }
+
+    .mobile-card .names {
+      font-size: clamp(28px, 9vw, 42px);
+      white-space: nowrap;
+    }
+
+    .mobile-card .subtitle {
+      font-size: clamp(18px, 6vw, 24px);
+      margin-top: 8px;
+    }
+
+    .mobile-card .message {
+      margin-top: 14px;
+      max-width: none;
+      font-size: clamp(16px, 5.1vw, 22px);
+      line-height: 1.35;
+    }
+
+    .mobile-card .signature {
+      margin-top: 16px;
+      font-size: clamp(17px, 4.7vw, 21px);
+    }
+
+    .mobile-domain {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.84);
+    }
+  }
+
+  @media (max-width: 420px) {
+    .mobile-image-section {
+      height: 44vh;
+      min-height: 290px;
+    }
+
+    .mobile-card .names {
+      font-size: clamp(24px, 8.8vw, 36px);
+    }
+
+    .mobile-card {
+      padding: 18px 16px 20px;
+    }
+  }
+</style>
 </head>
 <body>
   <div class="site">
