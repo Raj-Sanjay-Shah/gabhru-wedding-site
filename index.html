@@ -11,10 +11,15 @@
 
   <style>
     :root {
-      --bg: #100016;
-      --text: #fffdfd;
-      --soft: #f9edf1;
-      --muted: #f1dde5;
+      --bg: #120014;
+      --bg2: #1a0619;
+      --text: #fffaf3;
+      --soft: #f8e7c8;
+      --muted: #ecd7b2;
+      --gold-1: rgba(212, 164, 74, 0.20);
+      --gold-2: rgba(255, 224, 163, 0.16);
+      --gold-border: rgba(255, 225, 160, 0.26);
+      --shadow: rgba(0, 0, 0, 0.32);
     }
 
     * {
@@ -24,7 +29,7 @@
     html, body {
       margin: 0;
       padding: 0;
-      background: var(--bg);
+      background: linear-gradient(to bottom, var(--bg), var(--bg2));
       color: var(--text);
     }
 
@@ -36,7 +41,7 @@
     .site {
       min-height: 100vh;
       position: relative;
-      background: var(--bg);
+      background: linear-gradient(to bottom, var(--bg), var(--bg2));
     }
 
     canvas {
@@ -46,18 +51,25 @@
       z-index: 2;
     }
 
+    /* DESKTOP / LAPTOP */
+    .desktop-wrap {
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+
     .hero {
       position: relative;
-      min-height: 100vh;
+      min-height: 68vh;
       overflow: hidden;
-      background: var(--bg);
+      background: #120014;
     }
 
     .hero-image {
-      position: absolute;
-      inset: 0;
       width: 100%;
-      height: 100%;
+      height: 68vh;
+      min-height: 520px;
+      max-height: 840px;
       object-fit: cover;
       object-position: center center;
       display: block;
@@ -68,93 +80,114 @@
       inset: 0;
       background:
         linear-gradient(to bottom,
-          rgba(0, 0, 0, 0.03) 0%,
-          rgba(0, 0, 0, 0.08) 55%,
-          rgba(10, 0, 18, 0.18) 100%);
+          rgba(0, 0, 0, 0.02) 0%,
+          rgba(0, 0, 0, 0.04) 58%,
+          rgba(18, 0, 20, 0.12) 100%);
       z-index: 1;
     }
 
-    /* DESKTOP TEXT ONLY */
-    .desktop-text {
-      position: absolute;
-      left: 50%;
-      bottom: 4vh;
-      transform: translateX(-50%);
+    .desktop-message-section {
+      position: relative;
       z-index: 3;
+      padding: 28px 26px 42px;
+      margin-top: -10px;
+      background:
+        linear-gradient(to bottom,
+          rgba(22, 3, 19, 0.90) 0%,
+          rgba(28, 8, 22, 0.95) 100%);
+    }
 
-      width: min(90vw, 1250px);
+    .desktop-glass {
+      width: min(92vw, 1380px);
+      margin: 0 auto;
+      padding: 28px 38px 30px;
+
       text-align: center;
-      padding: 0 20px;
+
+      background:
+        linear-gradient(135deg,
+          rgba(255, 228, 170, 0.16) 0%,
+          rgba(202, 145, 50, 0.16) 35%,
+          rgba(255, 235, 190, 0.12) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+
+      border: 1px solid var(--gold-border);
+      border-radius: 28px;
+      box-shadow:
+        0 18px 48px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255,255,255,0.08);
     }
 
     .names {
       margin: 0;
       font-family: "Playfair Display", Georgia, serif;
-      font-size: clamp(46px, 4.25vw, 76px);
-      line-height: 1.03;
+      font-size: clamp(42px, 4vw, 70px);
+      line-height: 1.04;
       font-weight: 800;
       letter-spacing: 0.015em;
-      color: #ffffff;
+      color: #fff8ee;
       text-shadow:
-        0 0 10px rgba(255, 214, 102, 0.22),
-        0 0 22px rgba(255, 196, 77, 0.16),
-        0 6px 24px rgba(0, 0, 0, 0.76),
-        0 2px 8px rgba(0, 0, 0, 0.7);
+        0 2px 8px rgba(0,0,0,0.18);
     }
 
     .subtitle {
       margin: 10px 0 0;
-      font-size: clamp(24px, 1.8vw, 33px);
+      font-size: clamp(24px, 1.75vw, 34px);
       line-height: 1.1;
       font-weight: 700;
       color: var(--soft);
-      text-shadow:
-        0 0 10px rgba(255, 220, 130, 0.10),
-        0 4px 14px rgba(0, 0, 0, 0.72);
+      text-shadow: 0 2px 6px rgba(0,0,0,0.16);
     }
 
     .message {
       margin: 18px auto 0;
-      max-width: 1080px;
-      font-size: clamp(23px, 1.7vw, 31px);
-      line-height: 1.18;
+      max-width: 1100px;
+      font-size: clamp(26px, 1.95vw, 34px);
+      line-height: 1.16;
       font-weight: 700;
-      color: #ffffff;
-      text-shadow:
-        0 0 8px rgba(255, 222, 160, 0.08),
-        0 3px 12px rgba(0, 0, 0, 0.74);
+      color: #fff8f0;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.14);
     }
 
     .signature {
-      margin-top: 16px;
-      font-size: clamp(21px, 1.35vw, 27px);
+      margin-top: 18px;
+      font-size: clamp(22px, 1.45vw, 28px);
       line-height: 1.08;
       font-style: italic;
       font-weight: 600;
       color: var(--muted);
-      text-shadow:
-        0 3px 12px rgba(0, 0, 0, 0.72);
+      text-shadow: 0 2px 6px rgba(0,0,0,0.12);
     }
 
+    /* MOBILE */
     .mobile-wrap {
       display: none;
     }
 
     @media (max-width: 1024px) {
-      .desktop-text {
-        width: min(94vw, 1080px);
-        bottom: 3vh;
+      .hero {
+        min-height: 58vh;
+      }
+
+      .hero-image {
+        height: 58vh;
+        min-height: 430px;
+      }
+
+      .desktop-glass {
+        width: min(94vw, 1100px);
+        padding: 24px 24px 26px;
       }
 
       .message {
         max-width: 920px;
-        font-size: clamp(20px, 2vw, 28px);
+        font-size: clamp(22px, 2vw, 28px);
       }
     }
 
-    /* MOBILE */
     @media (max-width: 700px) {
-      .hero {
+      .desktop-wrap {
         display: none;
       }
 
@@ -201,10 +234,15 @@
       }
 
       .mobile-card {
-        background: rgba(24, 6, 32, 0.78);
+        background:
+          linear-gradient(135deg,
+            rgba(255, 228, 170, 0.13) 0%,
+            rgba(202, 145, 50, 0.12) 40%,
+            rgba(255, 235, 190, 0.10) 100%),
+          rgba(24, 6, 32, 0.82);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255,255,255,0.12);
+        border: 1px solid rgba(255, 230, 180, 0.16);
         border-radius: 24px;
         box-shadow: 0 12px 32px rgba(0,0,0,0.28);
         padding: 20px 18px 22px;
@@ -214,9 +252,6 @@
       .mobile-card .names {
         font-size: clamp(28px, 9vw, 42px);
         white-space: nowrap;
-        text-shadow:
-          0 0 8px rgba(255, 214, 102, 0.18),
-          0 4px 14px rgba(0, 0, 0, 0.6);
       }
 
       .mobile-card .subtitle {
@@ -259,24 +294,28 @@
     <canvas id="fireworks"></canvas>
 
     <!-- Desktop / laptop -->
-    <section class="hero">
-      <img class="hero-image" src="wedding-photo.png" alt="Congratulations celebration image" />
-      <div class="hero-overlay"></div>
+    <section class="desktop-wrap">
+      <section class="hero">
+        <img class="hero-image" src="wedding-photo.png" alt="Congratulations celebration image" />
+        <div class="hero-overlay"></div>
+      </section>
 
-      <div class="desktop-text">
-        <h1 class="names">Muktha ❤️ Rajat</h1>
+      <section class="desktop-message-section">
+        <div class="desktop-glass">
+          <h1 class="names">Muktha ❤️ Rajat</h1>
 
-        <div class="subtitle">Wishing You a Lifetime of Happiness</div>
+          <div class="subtitle">Wishing You a Lifetime of Happiness</div>
 
-        <div class="message">
-          May your marriage be filled with love, laughter, and beautiful memories, and may every day together bring joy and warmth to your hearts.
+          <div class="message">
+            May your marriage be filled with love, laughter, and beautiful memories, and may every day together bring joy and warmth to your hearts.
+          </div>
+
+          <div class="signature">
+            With love,<br />
+            Shivani, Rohan, Raj
+          </div>
         </div>
-
-        <div class="signature">
-          With love,<br />
-          Shivani, Rohan, Raj
-        </div>
-      </div>
+      </section>
     </section>
 
     <!-- Mobile -->
@@ -327,7 +366,7 @@
     function createFirework() {
       const mobile = window.innerWidth <= 700;
       const x = Math.random() * canvas.width;
-      const y = Math.random() * (mobile ? canvas.height * 0.22 : canvas.height * 0.42);
+      const y = Math.random() * (mobile ? canvas.height * 0.22 : canvas.height * 0.32);
 
       for (let i = 0; i < (mobile ? 42 : 62); i++) {
         const angle = Math.random() * Math.PI * 2;
