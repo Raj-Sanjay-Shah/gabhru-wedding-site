@@ -68,24 +68,24 @@
     }
 
     .message-section{
-      height:28vh;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     
-      display:flex;
-      justify-content:center;
-      align-items:center;
-    
-      margin-top:18px;          /* space from image */
-      padding:18px 20px 10px;   /* adds top breathing room INSIDE */
+      margin-top: 0;              /* remove gap that creates strip */
+      padding: 14px 20px 16px;
     
       background:
         radial-gradient(circle at 50% 0%,
-          rgba(255, 190, 110, 0.18) 0%,
-          rgba(130, 40, 60, 0.22) 34%,
+          rgba(255, 190, 110, 0.14) 0%,
+          rgba(130, 40, 60, 0.20) 30%,
           rgba(58, 0, 78, 0.92) 100%);
     
-      border-top:1px solid rgba(255, 190, 110, 0.12); /* subtle separator */
+      border-top: none;           /* ❌ remove thin line */
+      box-shadow: none;           /* ❌ remove glow strip */
     
-      z-index:3;
+      overflow: hidden;
     }
     .message-section::before {
       content: "";
