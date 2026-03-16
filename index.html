@@ -67,21 +67,26 @@
       display: block;
     }
 
-    .message-section {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 14px 22px 18px;
+    .message-section{
+      height:28vh;
+    
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    
+      margin-top:18px;          /* space from image */
+      padding:18px 20px 10px;   /* adds top breathing room INSIDE */
+    
       background:
         radial-gradient(circle at 50% 0%,
           rgba(255, 190, 110, 0.18) 0%,
           rgba(130, 40, 60, 0.22) 34%,
           rgba(58, 0, 78, 0.92) 100%);
-      overflow: hidden;
-      margin-top: 14px;
+    
+      border-top:1px solid rgba(255, 190, 110, 0.12); /* subtle separator */
+    
+      z-index:3;
     }
-
     .message-section::before {
       content: "";
       position: absolute;
