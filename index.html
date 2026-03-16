@@ -11,36 +11,55 @@
 
   <style>
     :root {
-      --bg-dark: #0c0214;
-      --card-bg: rgba(20, 10, 28, 0.46);
-      --card-border: rgba(255, 255, 255, 0.16);
-      --text-main: #ffffff;
-      --text-soft: #fbeaf2;
-      --text-body: #fff8fb;
-      --shadow: rgba(0, 0, 0, 0.38);
+      --bg: #100016;
+      --card: rgba(28, 10, 36, 0.55);
+      --card-border: rgba(255, 255, 255, 0.14);
+      --text: #fffdfd;
+      --soft: #f7e8ee;
+      --muted: #ead6df;
+      --shadow: rgba(0, 0, 0, 0.35);
     }
 
     * {
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       margin: 0;
-      background: var(--bg-dark);
-      color: var(--text-main);
-      text-align: center;
-      overflow: hidden;
-      font-family: "Cormorant Garamond", Georgia, serif;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
     }
 
+    body {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      overflow-x: hidden;
+    }
+
+    .site {
+      min-height: 100vh;
+      position: relative;
+      background: var(--bg);
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* DESKTOP / LAPTOP LAYOUT */
     .hero {
       position: relative;
-      height: 100vh;
-      width: 100%;
-      background: var(--bg-dark);
+      min-height: 100vh;
+      overflow: hidden;
+      background: var(--bg);
     }
 
-    .hero img {
+    .hero-image {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -48,186 +67,270 @@
       display: block;
     }
 
-    .overlay {
+    .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.06) 0%,
-        rgba(0, 0, 0, 0.14) 32%,
-        rgba(0, 0, 0, 0.44) 100%
-      );
+      background:
+        linear-gradient(to right, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.08) 46%, rgba(10, 0, 18, 0.20) 100%),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.12) 56%, rgba(10, 0, 18, 0.28) 100%);
       z-index: 1;
     }
 
-    .text {
+    .desktop-card {
       position: absolute;
-      left: 50%;
+      right: 4.5vw;
       bottom: 7vh;
-      transform: translateX(-50%);
-      width: min(88vw, 820px);
-      padding: 26px 30px;
+      width: min(39vw, 560px);
+      padding: 28px 30px 24px;
       z-index: 3;
 
-      background: var(--card-bg);
+      background: var(--card);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid var(--card-border);
-      border-radius: 24px;
-      box-shadow: 0 12px 42px var(--shadow);
+      border-radius: 26px;
+      box-shadow: 0 14px 44px var(--shadow);
+      text-align: center;
     }
 
-    h1 {
+    .names {
       margin: 0;
       font-family: "Playfair Display", Georgia, serif;
-      font-size: clamp(34px, 5vw, 64px);
-      line-height: 1.05;
+      font-size: clamp(38px, 4.2vw, 62px);
+      line-height: 1.04;
       font-weight: 600;
-      color: var(--text-main);
-      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.75);
       letter-spacing: 0.01em;
+      color: var(--text);
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.72);
     }
 
-    .couple {
-      display: inline-block;
-      white-space: nowrap;
-    }
-
-    h2 {
+    .subtitle {
       margin: 10px 0 0;
-      font-family: "Cormorant Garamond", Georgia, serif;
-      font-size: clamp(22px, 2.5vw, 32px);
+      font-size: clamp(22px, 1.9vw, 30px);
+      line-height: 1.15;
       font-weight: 500;
-      color: var(--text-soft);
-      letter-spacing: 0.02em;
-      text-shadow: 0 3px 10px rgba(0, 0, 0, 0.55);
+      color: var(--soft);
+      text-shadow: 0 3px 12px rgba(0, 0, 0, 0.52);
     }
 
-    p {
-      max-width: 700px;
+    .message {
       margin: 18px auto 0;
-      font-size: clamp(20px, 1.85vw, 28px);
-      line-height: 1.45;
-      color: var(--text-body);
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+      max-width: 460px;
+      font-size: clamp(18px, 1.45vw, 25px);
+      line-height: 1.4;
+      color: var(--text);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.40);
     }
 
     .signature {
       margin-top: 18px;
-      font-size: clamp(18px, 1.6vw, 24px);
-      line-height: 1.25;
-      color: #fff3f8;
+      font-size: clamp(18px, 1.3vw, 24px);
+      line-height: 1.2;
       font-style: italic;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+      color: var(--muted);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.38);
     }
 
-    .footer {
+    .domain {
       position: absolute;
-      bottom: 12px;
-      width: 100%;
+      left: 50%;
+      bottom: 14px;
+      transform: translateX(-50%);
       z-index: 3;
-      font-family: "Cormorant Garamond", Georgia, serif;
-      font-size: 15px;
-      letter-spacing: 0.06em;
-      color: #f6eef4;
-      opacity: 0.92;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.88);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.35);
     }
 
-    canvas {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 2;
+    /* MOBILE LAYOUT */
+    .mobile-wrap {
+      display: none;
     }
 
-    @media (max-width: 900px) {
-      .text {
-        width: 90vw;
-        padding: 22px 22px;
+    /* TABLET */
+    @media (max-width: 1024px) {
+      .desktop-card {
+        width: min(44vw, 520px);
+        right: 3.2vw;
+        bottom: 5.5vh;
+        padding: 24px 24px 22px;
+      }
+
+      .message {
+        max-width: 420px;
       }
     }
 
-    @media (max-width: 640px) {
-      .hero img {
-        object-fit: contain;
+    /* MOBILE */
+    @media (max-width: 700px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      canvas {
+        position: fixed;
+        inset: 0;
+      }
+
+      .hero {
+        display: none;
+      }
+
+      .mobile-wrap {
+        display: block;
+        position: relative;
+        min-height: 100vh;
+        background:
+          linear-gradient(to bottom, #170020 0%, #110016 100%);
+        z-index: 1;
+      }
+
+      .mobile-image-section {
+        position: relative;
+        height: 46vh;
+        min-height: 320px;
+        max-height: 430px;
+        overflow: hidden;
+      }
+
+      .mobile-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
         object-position: center top;
-        background: var(--bg-dark);
+        display: block;
       }
 
-      .overlay {
+      .mobile-image-overlay {
+        position: absolute;
+        inset: 0;
         background: linear-gradient(
           to bottom,
-          rgba(0, 0, 0, 0.04) 0%,
-          rgba(0, 0, 0, 0.10) 48%,
-          rgba(0, 0, 0, 0.34) 100%
+          rgba(0, 0, 0, 0.02) 0%,
+          rgba(0, 0, 0, 0.05) 62%,
+          rgba(16, 0, 22, 0.24) 100%
         );
       }
 
-      .text {
-        bottom: 4vh;
-        width: 92vw;
-        padding: 18px 16px;
-        border-radius: 20px;
-        background: rgba(20, 10, 28, 0.58);
+      .mobile-card-wrap {
+        position: relative;
+        margin-top: -18px;
+        padding: 0 16px 26px;
+        z-index: 3;
       }
 
-      h1 {
-        font-size: clamp(28px, 7.4vw, 40px);
+      .mobile-card {
+        background: rgba(24, 6, 32, 0.78);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 24px;
+        box-shadow: 0 12px 32px rgba(0,0,0,0.28);
+        padding: 20px 18px 22px;
+        text-align: center;
       }
 
-      .couple {
-        white-space: normal;
+      .mobile-card .names {
+        font-size: clamp(28px, 9vw, 42px);
+        white-space: nowrap;
       }
 
-      h2 {
-        font-size: clamp(20px, 5vw, 26px);
+      .mobile-card .subtitle {
+        font-size: clamp(18px, 6vw, 24px);
+        margin-top: 8px;
       }
 
-      p {
-        font-size: clamp(18px, 4.6vw, 22px);
+      .mobile-card .message {
+        margin-top: 14px;
+        max-width: none;
+        font-size: clamp(16px, 5.1vw, 22px);
         line-height: 1.35;
       }
 
-      .signature {
-        font-size: clamp(17px, 4.2vw, 21px);
+      .mobile-card .signature {
+        margin-top: 16px;
+        font-size: clamp(17px, 4.7vw, 21px);
       }
 
-      .footer {
+      .mobile-domain {
+        text-align: center;
+        margin-top: 14px;
         font-size: 13px;
-        bottom: 10px;
+        letter-spacing: 0.08em;
+        color: rgba(255,255,255,0.84);
       }
     }
 
-    @media (max-width: 430px) {
-      .text {
-        bottom: 3.5vh;
+    @media (max-width: 420px) {
+      .mobile-image-section {
+        height: 44vh;
+        min-height: 290px;
+      }
+
+      .mobile-card .names {
+        font-size: clamp(24px, 8.8vw, 36px);
+      }
+
+      .mobile-card {
+        padding: 18px 16px 20px;
       }
     }
   </style>
 </head>
 <body>
-  <canvas id="fireworks"></canvas>
+  <div class="site">
+    <canvas id="fireworks"></canvas>
 
-  <div class="hero">
-    <img src="wedding-photo.png" alt="Congratulations celebration image" />
-    <div class="overlay"></div>
+    <!-- Desktop / laptop -->
+    <section class="hero">
+      <img class="hero-image" src="wedding-photo.png" alt="Congratulations celebration image" />
+      <div class="hero-overlay"></div>
 
-    <div class="text">
-      <h1><span class="couple">Muktha ❤️ Rajat</span></h1>
-      <h2>Wishing You a Lifetime of Happiness</h2>
+      <div class="desktop-card">
+        <h1 class="names">Muktha ❤️ Rajat</h1>
+        <div class="subtitle">Wishing You a Lifetime of Happiness</div>
 
-      <p>
-        May your marriage be filled with love, laughter, and countless beautiful memories.
-        May every day together bring joy, adventure, and warmth to your hearts.
-      </p>
+        <div class="message">
+          May your marriage be filled with love, laughter, and countless beautiful memories.
+          May every day together bring joy, adventure, and warmth to your hearts.
+        </div>
 
-      <div class="signature">
-        With love,<br />
-        Raj
+        <div class="signature">
+          With love,<br />
+          Shivani, Rohan, Raj
+        </div>
       </div>
-    </div>
 
-    <div class="footer">gabhru.xyz</div>
+      <div class="domain">gabhru.xyz</div>
+    </section>
+
+    <!-- Mobile -->
+    <section class="mobile-wrap">
+      <div class="mobile-image-section">
+        <img class="mobile-image" src="wedding-photo.png" alt="Congratulations celebration image" />
+        <div class="mobile-image-overlay"></div>
+      </div>
+
+      <div class="mobile-card-wrap">
+        <div class="mobile-card">
+          <h1 class="names">Muktha ❤️ Rajat</h1>
+          <div class="subtitle">Wishing You a Lifetime of Happiness</div>
+
+          <div class="message">
+            May your marriage be filled with love, laughter, and countless beautiful memories.
+            May every day together bring joy, adventure, and warmth to your hearts.
+          </div>
+
+          <div class="signature">
+            With love,<br />
+            Shivani, Rohan, Raj
+          </div>
+        </div>
+
+        <div class="mobile-domain">gabhru.xyz</div>
+      </div>
+    </section>
   </div>
 
   <script>
@@ -245,25 +348,26 @@
     const particles = [];
 
     function randomColor() {
-      const colors = ["#FFD700", "#FFEC8B", "#FFF4B2", "#FFC857", "#FFE066"];
+      const colors = ["#FFD700", "#FFEC8B", "#FFF1A8", "#FFC857", "#FFE066"];
       return colors[Math.floor(Math.random() * colors.length)];
     }
 
     function createFirework() {
+      const mobile = window.innerWidth <= 700;
       const x = Math.random() * canvas.width;
-      const y = Math.random() * (canvas.height * 0.42);
+      const y = Math.random() * (mobile ? canvas.height * 0.22 : canvas.height * 0.42);
 
-      for (let i = 0; i < 65; i++) {
+      for (let i = 0; i < (mobile ? 42 : 62); i++) {
         const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 3.3 + 1.1;
+        const speed = Math.random() * (mobile ? 2.5 : 3.2) + 1.0;
 
         particles.push({
           x,
           y,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
-          life: 78 + Math.random() * 18,
-          radius: Math.random() * 2 + 1,
+          life: 70 + Math.random() * 18,
+          radius: Math.random() * 1.8 + 0.8,
           color: randomColor()
         });
       }
@@ -276,10 +380,10 @@
         const p = particles[i];
         p.x += p.vx;
         p.y += p.vy;
-        p.vy += 0.015;
+        p.vy += 0.012;
         p.life -= 1;
 
-        ctx.globalAlpha = Math.max(p.life / 100, 0);
+        ctx.globalAlpha = Math.max(p.life / 90, 0);
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
@@ -294,7 +398,7 @@
       requestAnimationFrame(animate);
     }
 
-    setInterval(createFirework, 1200);
+    setInterval(createFirework, 1300);
     createFirework();
     animate();
   </script>
