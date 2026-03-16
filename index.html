@@ -1,355 +1,411 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Muktha & Rajat</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muktha & Rajat</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #140016;
+      --text: #fff8ee;
+      --goldborder: rgba(255, 214, 130, 0.35);
+    }
 
-<style>
+    * {
+      box-sizing: border-box;
+    }
 
-:root{
---bg:#140016;
---text:#fff8ee;
---goldborder:rgba(255,214,130,0.35);
-}
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Cormorant Garamond", serif;
+    }
 
-*{box-sizing:border-box;}
+    body {
+      overflow: hidden;
+    }
 
-html,body{
-margin:0;
-padding:0;
-height:100%;
-background:var(--bg);
-color:var(--text);
-font-family:"Cormorant Garamond",serif;
-overflow:hidden;
-}
+    canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
 
-canvas{
-position:fixed;
-inset:0;
-pointer-events:none;
-z-index:2;
-}
+    /* ===== DESKTOP ===== */
 
-/* ===== LAYOUT ===== */
+    .desktop {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      position: relative;
+      z-index: 1;
+      background:
+        linear-gradient(to bottom, #1a0320 0%, #2a0a2b 48%, #24051e 100%);
+    }
 
-.desktop{
-display:flex;
-flex-direction:column;
-height:100vh;
-}
+    .hero {
+      height: 72vh;
+      position: relative;
+      overflow: hidden;
+    }
 
-/* IMAGE */
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+    }
 
-.hero{
-height:72vh;
-position:relative;
-overflow:hidden;
-}
+    .message-section {
+      height: 28vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: -70px;
+      padding: 0 20px;
+      background:
+        radial-gradient(circle at top,
+          rgba(255, 190, 110, 0.18) 0%,
+          rgba(130, 40, 60, 0.22) 40%,
+          rgba(45, 0, 60, 0.92) 100%);
+      z-index: 3;
+      position: relative;
+      overflow: hidden;
+    }
 
-.hero img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
+    .message-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 0%,
+          rgba(255, 214, 120, 0.16) 0%,
+          rgba(255, 214, 120, 0.08) 22%,
+          rgba(0, 0, 0, 0) 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-/* MESSAGE PANEL */
+    .glass {
+      position: relative;
+      width: min(92vw, 1100px);
+      background: linear-gradient(
+        135deg,
+        rgba(255, 215, 150, 0.22),
+        rgba(190, 110, 60, 0.22),
+        rgba(120, 40, 80, 0.22)
+      );
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 22px;
+      border: 1px solid rgba(255, 220, 150, 0.45);
+      padding: 16px 26px;
+      text-align: center;
+      box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255,255,255,0.15);
+      overflow: hidden;
+      z-index: 1;
+    }
 
-.message-section{
-height:28vh;
+    .glass::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -140%;
+      width: 90%;
+      height: 100%;
+      background: linear-gradient(
+        115deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,245,215,0.05) 32%,
+        rgba(255,230,160,0.18) 48%,
+        rgba(255,245,215,0.05) 64%,
+        rgba(255,255,255,0) 100%
+      );
+      transform: skewX(-20deg);
+      animation: shimmer 6s linear infinite;
+      pointer-events: none;
+    }
 
-display:flex;
-justify-content:center;
-align-items:flex-start;
+    @keyframes shimmer {
+      0% {
+        left: -140%;
+      }
+      100% {
+        left: 160%;
+      }
+    }
 
-margin-top:-70px;
-padding:0 20px;
+    .names {
+      margin: 0;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(34px, 2.6vw, 46px);
+      line-height: 1.05;
+      font-weight: 700;
+      color: #fff8ef;
+      text-shadow:
+        0 1px 0 rgba(255,255,255,0.08),
+        0 2px 10px rgba(0,0,0,0.18);
+      position: relative;
+      z-index: 1;
+    }
 
-z-index:3;
-}
+    .subtitle {
+      margin-top: 4px;
+      font-size: clamp(18px, 1.3vw, 22px);
+      line-height: 1.1;
+      font-weight: 600;
+      color: #f7e4c3;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.16);
+      position: relative;
+      z-index: 1;
+    }
 
-.glass{
+    .message {
+      margin: 8px auto 0;
+      max-width: 820px;
+      font-size: clamp(18px, 1.3vw, 22px);
+      line-height: 1.15;
+      font-weight: 600;
+      color: #fff8f1;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.14);
+      position: relative;
+      z-index: 1;
+    }
 
-width:min(92vw,1100px);
+    .signature {
+      margin-top: 8px;
+      font-size: clamp(16px, 1vw, 20px);
+      line-height: 1.1;
+      font-style: italic;
+      font-weight: 600;
+      color: #f0dcc0;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.14);
+      position: relative;
+      z-index: 1;
+    }
 
-background:linear-gradient(
-135deg,
-rgba(255,225,170,0.18),
-rgba(190,140,60,0.18)
-);
+    /* ===== MOBILE ===== */
 
-backdrop-filter:blur(14px);
-
-border-radius:22px;
-border:1px solid var(--goldborder);
-
-padding:16px 26px;
-
-text-align:center;
-
-box-shadow:0 10px 30px rgba(0,0,0,0.25);
-}
-
-/* TEXT */
-
-.names{
-margin:0;
-font-family:"Playfair Display",serif;
-font-size:clamp(34px,2.6vw,46px);
-font-weight:700;
-}
-
-.subtitle{
-margin-top:4px;
-font-size:clamp(18px,1.3vw,22px);
-font-weight:600;
-}
-
-.message{
-margin-top:8px;
-font-size:clamp(18px,1.3vw,22px);
-font-weight:600;
-line-height:1.15;
-max-width:820px;
-margin-left:auto;
-margin-right:auto;
-}
-
-.signature{
-margin-top:8px;
-font-size:clamp(16px,1vw,20px);
-font-style:italic;
-}
-
-/* ===== MOBILE ===== */
+    /* ===== MOBILE ===== */
 
 .mobile{
-display:none;
-}
-
-@media(max-width:700px){
-
-html,body{
-overflow:auto;
-}
-
-.desktop{
-display:none;
-}
-
-.mobile{
-display:block;
-min-height:100vh;
-background:linear-gradient(#170020,#110016);
-}
-
-.mobile-img{
-height:45vh;
-overflow:hidden;
-}
-
-.mobile-img img{
-width:100%;
-height:100%;
-object-fit:cover;
-object-position:center top;
-}
-
-.mobile-card{
-
-margin:-20px 16px 20px;
-
-padding:18px;
-
-border-radius:20px;
-
-background:linear-gradient(
-135deg,
-rgba(255,225,170,0.14),
-rgba(190,140,60,0.14)
-);
-
-border:1px solid var(--goldborder);
-
-text-align:center;
-
-}
-
-.mobile-card .names{
-font-size:clamp(28px,9vw,40px);
-}
-
-.mobile-card .subtitle{
-font-size:clamp(18px,6vw,22px);
-}
-
-.mobile-card .message{
-font-size:clamp(17px,5vw,20px);
-line-height:1.15;
-}
-
-.mobile-card .signature{
-margin-top:12px;
-font-size:clamp(16px,4vw,20px);
-}
-
-}
-
-</style>
+  display:none;
+  }
+  
+  @media(max-width:700px){
+  
+  html,body{
+  height:auto;
+  overflow:auto;
+  }
+  
+  .desktop{
+  display:none;
+  }
+  
+  .mobile{
+  display:block;
+  min-height:100vh;
+  background:linear-gradient(to bottom,#170020 0%,#110016 100%);
+  }
+  
+  .mobile-img{
+  height:45vh;
+  overflow:hidden;
+  }
+  
+  .mobile-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+  }
+  
+  .mobile-card{
+  
+  margin:20px 16px 30px;   /* no negative margin */
+  
+  padding:20px;
+  
+  border-radius:20px;
+  
+  background:linear-gradient(
+  135deg,
+  rgba(255,215,150,0.18),
+  rgba(190,110,60,0.18),
+  rgba(120,40,80,0.18)
+  );
+  
+  backdrop-filter:blur(12px);
+  
+  border:1px solid rgba(255,220,150,0.30);
+  
+  text-align:center;
+  
+  box-shadow:0 10px 28px rgba(0,0,0,0.28);
+  
+  }
+  
+  .mobile-card .names{
+  font-size:clamp(28px,9vw,40px);
+  }
+  
+  .mobile-card .subtitle{
+  font-size:clamp(18px,6vw,22px);
+  margin-top:6px;
+  }
+  
+  .mobile-card .message{
+  font-size:clamp(17px,5vw,20px);
+  line-height:1.2;
+  margin-top:10px;
+  }
+  
+  .mobile-card .signature{
+  margin-top:14px;
+  font-size:clamp(16px,4vw,20px);
+  }
+  
+  
+    }
+  </style>
 </head>
-
 <body>
 
-<canvas id="fireworks"></canvas>
+  <canvas id="fireworks"></canvas>
 
-<!-- DESKTOP -->
+  <!-- DESKTOP -->
+  <div class="desktop">
+    <div class="hero">
+      <img src="wedding-photo.png" alt="Wedding celebration image">
+    </div>
 
-<div class="desktop">
+    <div class="message-section">
+      <div class="glass">
+        <h1 class="names">Muktha ❤️ Rajat</h1>
 
-<div class="hero">
-<img src="wedding-photo.png">
-</div>
+        <div class="subtitle">
+          Wishing You a Lifetime of Happiness
+        </div>
 
-<div class="message-section">
+        <div class="message">
+          May your marriage be filled with love, laughter, and beautiful memories, and may every day together bring joy and warmth to your hearts.
+        </div>
 
-<div class="glass">
+        <div class="signature">
+          With love,<br>
+          Shivani, Rohan, Raj
+        </div>
+      </div>
+    </div>
+  </div>
 
-<h1 class="names">Muktha ❤️ Rajat</h1>
+  <!-- MOBILE -->
+  <div class="mobile">
+    <div class="mobile-img">
+      <img src="wedding-photo.png" alt="Wedding celebration image">
+    </div>
 
-<div class="subtitle">
-Wishing You a Lifetime of Happiness
-</div>
+    <div class="mobile-card">
+      <h1 class="names">Muktha ❤️ Rajat</h1>
 
-<div class="message">
-May your marriage be filled with love, laughter, and beautiful memories, and may every day together bring joy and warmth to your hearts.
-</div>
+      <div class="subtitle">
+        Wishing You a Lifetime of Happiness
+      </div>
 
-<div class="signature">
-With love,<br>
-Shivani, Rohan, Raj
-</div>
+      <div class="message">
+        May your marriage be filled with love, laughter, and beautiful memories, and may every day together bring joy and warmth to your hearts.
+      </div>
 
-</div>
+      <div class="signature">
+        With love,<br>
+        Shivani, Rohan, Raj
+      </div>
+    </div>
+  </div>
 
-</div>
+  <script>
+    const canvas = document.getElementById("fireworks");
+    const ctx = canvas.getContext("2d");
 
-</div>
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
 
-<!-- MOBILE -->
+    resize();
+    window.addEventListener("resize", resize);
 
-<div class="mobile">
+    const particles = [];
 
-<div class="mobile-img">
-<img src="wedding-photo.png">
-</div>
+    function color() {
+      const colors = ["#FFD700", "#FFE066", "#FFC857", "#FFF1A8"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
 
-<div class="mobile-card">
+    function firework() {
+      const mobile = window.innerWidth < 700;
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * (mobile ? canvas.height * 0.22 : canvas.height * 0.35);
 
-<h1 class="names">Muktha ❤️ Rajat</h1>
+      for (let i = 0; i < (mobile ? 40 : 60); i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * (mobile ? 2.5 : 3) + 1;
 
-<div class="subtitle">
-Wishing You a Lifetime of Happiness
-</div>
+        particles.push({
+          x,
+          y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          life: 70 + Math.random() * 20,
+          r: Math.random() * 1.8 + 0.8,
+          c: color()
+        });
+      }
+    }
 
-<div class="message">
-May your marriage be filled with love, laughter, and beautiful memories, and may every day together bring joy and warmth to your hearts.
-</div>
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-<div class="signature">
-With love,<br>
-Shivani, Rohan, Raj
-</div>
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
 
-</div>
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.012;
+        p.life--;
 
-</div>
+        ctx.globalAlpha = Math.max(p.life / 90, 0);
 
-<script>
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.c;
+        ctx.fill();
 
-const canvas=document.getElementById("fireworks")
-const ctx=canvas.getContext("2d")
+        if (p.life <= 0) particles.splice(i, 1);
+      }
 
-function resize(){
-canvas.width=window.innerWidth
-canvas.height=window.innerHeight
-}
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(animate);
+    }
 
-resize()
-window.addEventListener("resize",resize)
-
-const particles=[]
-
-function color(){
-const c=["#FFD700","#FFE066","#FFC857","#FFF1A8"]
-return c[Math.floor(Math.random()*c.length)]
-}
-
-function firework(){
-
-const mobile=window.innerWidth<700
-
-const x=Math.random()*canvas.width
-const y=Math.random()*(mobile?canvas.height*0.22:canvas.height*0.35)
-
-for(let i=0;i<(mobile?40:60);i++){
-
-const angle=Math.random()*Math.PI*2
-const speed=Math.random()*(mobile?2.5:3)+1
-
-particles.push({
-x,
-y,
-vx:Math.cos(angle)*speed,
-vy:Math.sin(angle)*speed,
-life:70+Math.random()*20,
-r:Math.random()*1.8+0.8,
-c:color()
-})
-
-}
-
-}
-
-function animate(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height)
-
-for(let i=particles.length-1;i>=0;i--){
-
-const p=particles[i]
-
-p.x+=p.vx
-p.y+=p.vy
-p.vy+=0.012
-p.life--
-
-ctx.globalAlpha=Math.max(p.life/90,0)
-
-ctx.beginPath()
-ctx.arc(p.x,p.y,p.r,0,Math.PI*2)
-ctx.fillStyle=p.c
-ctx.fill()
-
-if(p.life<=0)particles.splice(i,1)
-
-}
-
-ctx.globalAlpha=1
-requestAnimationFrame(animate)
-
-}
-
-setInterval(firework,1300)
-firework()
-animate()
-
-</script>
+    setInterval(firework, 1300);
+    firework();
+    animate();
+  </script>
 
 </body>
 </html>
