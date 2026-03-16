@@ -13,7 +13,7 @@
     :root {
       --bg: #140016;
       --text: #fff8ee;
-      --goldborder: rgba(255, 214, 130, 0.35);
+      --goldborder: rgba(255, 214, 130, 0.34);
     }
 
     * {
@@ -23,14 +23,13 @@
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
       background: var(--bg);
       color: var(--text);
       font-family: "Cormorant Garamond", serif;
     }
 
     body {
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     canvas {
@@ -40,22 +39,23 @@
       z-index: 2;
     }
 
-    /* ===== DESKTOP ===== */
+    /* ===== DESKTOP / LAPTOP ===== */
 
     .desktop {
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
+      display: grid;
+      grid-template-rows: minmax(0, 68vh) minmax(0, 32vh);
+      min-height: 100vh;
       position: relative;
       z-index: 1;
       background:
-        linear-gradient(to bottom, #1a0320 0%, #2a0a2b 48%, #24051e 100%);
+        linear-gradient(to bottom, #1a0320 0%, #2b0a2d 48%, #25051f 100%);
+      overflow: hidden;
     }
 
     .hero {
-      height: 72vh;
       position: relative;
       overflow: hidden;
+      min-height: 0;
     }
 
     .hero img {
@@ -67,19 +67,16 @@
     }
 
     .message-section {
-      height: 28vh;
+      position: relative;
       display: flex;
       justify-content: center;
-      align-items: flex-start;
-      margin-top: -70px;
-      padding: 0 20px;
+      align-items: center;
+      padding: 14px 22px 18px;
       background:
-        radial-gradient(circle at top,
+        radial-gradient(circle at 50% 0%,
           rgba(255, 190, 110, 0.18) 0%,
-          rgba(130, 40, 60, 0.22) 40%,
-          rgba(45, 0, 60, 0.92) 100%);
-      z-index: 3;
-      position: relative;
+          rgba(130, 40, 60, 0.22) 34%,
+          rgba(58, 0, 78, 0.92) 100%);
       overflow: hidden;
     }
 
@@ -89,31 +86,31 @@
       inset: 0;
       background:
         radial-gradient(circle at 50% 0%,
-          rgba(255, 214, 120, 0.16) 0%,
-          rgba(255, 214, 120, 0.08) 22%,
-          rgba(0, 0, 0, 0) 55%);
+          rgba(255, 218, 140, 0.14) 0%,
+          rgba(255, 218, 140, 0.07) 18%,
+          rgba(0, 0, 0, 0) 52%);
       pointer-events: none;
-      z-index: 0;
     }
 
     .glass {
       position: relative;
-      width: min(92vw, 1100px);
-      background: linear-gradient(
-        135deg,
-        rgba(255, 215, 150, 0.22),
-        rgba(190, 110, 60, 0.22),
-        rgba(120, 40, 80, 0.22)
-      );
+      width: min(92vw, 1180px);
+      padding: 16px 28px 18px;
+      text-align: center;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 220, 150, 0.42);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255, 215, 150, 0.20),
+          rgba(186, 104, 58, 0.19),
+          rgba(108, 28, 86, 0.22)
+        );
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
-      border-radius: 22px;
-      border: 1px solid rgba(255, 220, 150, 0.45);
-      padding: 16px 26px;
-      text-align: center;
       box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.35),
-        inset 0 1px 0 rgba(255,255,255,0.15);
+        0 10px 28px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255,255,255,0.12);
       overflow: hidden;
       z-index: 1;
     }
@@ -122,164 +119,175 @@
       content: "";
       position: absolute;
       top: 0;
-      left: -140%;
+      left: -145%;
       width: 90%;
       height: 100%;
       background: linear-gradient(
         115deg,
         rgba(255,255,255,0) 0%,
-        rgba(255,245,215,0.05) 32%,
-        rgba(255,230,160,0.18) 48%,
-        rgba(255,245,215,0.05) 64%,
+        rgba(255,245,215,0.04) 34%,
+        rgba(255,230,160,0.16) 50%,
+        rgba(255,245,215,0.04) 66%,
         rgba(255,255,255,0) 100%
       );
       transform: skewX(-20deg);
-      animation: shimmer 6s linear infinite;
+      animation: shimmer 6.5s linear infinite;
       pointer-events: none;
     }
 
     @keyframes shimmer {
-      0% {
-        left: -140%;
-      }
-      100% {
-        left: 160%;
-      }
+      0% { left: -145%; }
+      100% { left: 160%; }
     }
 
     .names {
+      position: relative;
+      z-index: 1;
       margin: 0;
       font-family: "Playfair Display", serif;
-      font-size: clamp(34px, 2.6vw, 46px);
-      line-height: 1.05;
+      font-size: clamp(34px, 2.6vw, 48px);
+      line-height: 1.04;
       font-weight: 700;
       color: #fff8ef;
       text-shadow:
         0 1px 0 rgba(255,255,255,0.08),
         0 2px 10px rgba(0,0,0,0.18);
-      position: relative;
-      z-index: 1;
     }
 
     .subtitle {
-      margin-top: 4px;
-      font-size: clamp(18px, 1.3vw, 22px);
-      line-height: 1.1;
-      font-weight: 600;
-      color: #f7e4c3;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.16);
       position: relative;
       z-index: 1;
+      margin-top: 4px;
+      font-size: clamp(18px, 1.3vw, 23px);
+      line-height: 1.08;
+      font-weight: 600;
+      color: #f5e2c0;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.14);
     }
 
     .message {
-      margin: 8px auto 0;
-      max-width: 820px;
-      font-size: clamp(18px, 1.3vw, 22px);
-      line-height: 1.15;
-      font-weight: 600;
-      color: #fff8f1;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.14);
       position: relative;
       z-index: 1;
+      margin: 8px auto 0;
+      max-width: 860px;
+      font-size: clamp(18px, 1.25vw, 22px);
+      line-height: 1.14;
+      font-weight: 600;
+      color: #fff7ef;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.14);
     }
 
     .signature {
-      margin-top: 8px;
-      font-size: clamp(16px, 1vw, 20px);
-      line-height: 1.1;
-      font-style: italic;
-      font-weight: 600;
-      color: #f0dcc0;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.14);
       position: relative;
       z-index: 1;
+      margin-top: 8px;
+      font-size: clamp(16px, 1vw, 20px);
+      line-height: 1.08;
+      font-style: italic;
+      font-weight: 600;
+      color: #efdbc0;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.14);
     }
 
     /* ===== MOBILE ===== */
 
-    /* ===== MOBILE ===== */
+    .mobile {
+      display: none;
+    }
 
-.mobile{
-  display:none;
-  }
-  
-  @media(max-width:700px){
-  
-  html,body{
-  height:auto;
-  overflow:auto;
-  }
-  
-  .desktop{
-  display:none;
-  }
-  
-  .mobile{
-  display:block;
-  min-height:100vh;
-  background:linear-gradient(to bottom,#170020 0%,#110016 100%);
-  }
-  
-  .mobile-img{
-  height:45vh;
-  overflow:hidden;
-  }
-  
-  .mobile-img img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center top;
-  display:block;
-  }
-  
-  .mobile-card{
-  
-  margin:20px 16px 30px;   /* no negative margin */
-  
-  padding:20px;
-  
-  border-radius:20px;
-  
-  background:linear-gradient(
-  135deg,
-  rgba(255,215,150,0.18),
-  rgba(190,110,60,0.18),
-  rgba(120,40,80,0.18)
-  );
-  
-  backdrop-filter:blur(12px);
-  
-  border:1px solid rgba(255,220,150,0.30);
-  
-  text-align:center;
-  
-  box-shadow:0 10px 28px rgba(0,0,0,0.28);
-  
-  }
-  
-  .mobile-card .names{
-  font-size:clamp(28px,9vw,40px);
-  }
-  
-  .mobile-card .subtitle{
-  font-size:clamp(18px,6vw,22px);
-  margin-top:6px;
-  }
-  
-  .mobile-card .message{
-  font-size:clamp(17px,5vw,20px);
-  line-height:1.2;
-  margin-top:10px;
-  }
-  
-  .mobile-card .signature{
-  margin-top:14px;
-  font-size:clamp(16px,4vw,20px);
-  }
-  
-  
+    @media (max-width: 700px) {
+      html, body {
+        height: auto;
+      }
+
+      body {
+        overflow: auto;
+      }
+
+      .desktop {
+        display: none;
+      }
+
+      .mobile {
+        display: block;
+        min-height: 100vh;
+        background: linear-gradient(to bottom, #170020 0%, #110016 100%);
+        position: relative;
+        z-index: 1;
+      }
+
+      .mobile-img {
+        height: 45vh;
+        overflow: hidden;
+      }
+
+      .mobile-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        display: block;
+      }
+
+      .mobile-card {
+        margin: 20px 16px 30px;
+        padding: 20px;
+        border-radius: 20px;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 215, 150, 0.18),
+          rgba(190, 110, 60, 0.18),
+          rgba(120, 40, 80, 0.18)
+        );
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 220, 150, 0.30);
+        text-align: center;
+        box-shadow: 0 10px 28px rgba(0,0,0,0.28);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .mobile-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -160%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          115deg,
+          rgba(255,255,255,0) 0%,
+          rgba(255,245,215,0.04) 35%,
+          rgba(255,230,160,0.12) 50%,
+          rgba(255,245,215,0.04) 65%,
+          rgba(255,255,255,0) 100%
+        );
+        transform: skewX(-20deg);
+        animation: shimmer 7s linear infinite;
+        pointer-events: none;
+      }
+
+      .mobile-card .names {
+        font-size: clamp(28px, 9vw, 40px);
+      }
+
+      .mobile-card .subtitle {
+        font-size: clamp(18px, 6vw, 22px);
+        margin-top: 6px;
+      }
+
+      .mobile-card .message {
+        font-size: clamp(17px, 5vw, 20px);
+        line-height: 1.18;
+        max-width: none;
+        margin-top: 10px;
+      }
+
+      .mobile-card .signature {
+        margin-top: 14px;
+        font-size: clamp(16px, 4vw, 20px);
+      }
     }
   </style>
 </head>
@@ -287,7 +295,7 @@
 
   <canvas id="fireworks"></canvas>
 
-  <!-- DESKTOP -->
+  <!-- DESKTOP / LAPTOP -->
   <div class="desktop">
     <div class="hero">
       <img src="wedding-photo.png" alt="Wedding celebration image">
@@ -359,7 +367,7 @@
     function firework() {
       const mobile = window.innerWidth < 700;
       const x = Math.random() * canvas.width;
-      const y = Math.random() * (mobile ? canvas.height * 0.22 : canvas.height * 0.35);
+      const y = Math.random() * (mobile ? canvas.height * 0.22 : canvas.height * 0.30);
 
       for (let i = 0; i < (mobile ? 40 : 60); i++) {
         const angle = Math.random() * Math.PI * 2;
